@@ -22,4 +22,15 @@ export const MuiTheme = createTheme({
       leavingScreen: 200,
     },
   },
+  components: {
+    MuiMenuItem: {
+      styleOverrides: {
+        root: {
+          "&.Mui-selected": {
+            borderLeft: "4px solid #FE7240",
+          },
+        },
+      },
+    },
+  },
 });
