@@ -3,6 +3,8 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Providers from "./services/providers";
 import { MenuPage } from "./pages/menu/page";
 import Layout from "./components/layout/Layout";
+import { ROUTE } from "./constant/route";
+import CategoryPage from "./pages/category/page";
 
 // TODOS:
 // Suspense
@@ -14,14 +16,14 @@ function App() {
     <Providers>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Layout />}>
+          <Route path={ROUTE.HOME.HREF} element={<Layout />}>
             <Route index element={<MenuPage />} />
           </Route>
-          <Route path="/about" element={<Layout />}>
-            <Route index element={<MenuPage />} />
+          <Route path={ROUTE.CATEGORY.HREF} element={<Layout />}>
+            <Route index element={<CategoryPage />} />
           </Route>
-          <Route path="/contact" element={<Layout />}>
-            <Route index element={<MenuPage />} />
+          <Route path={ROUTE.ACTION_LOGS.HREF} element={<Layout />}>
+            <Route index element={<div>Contact</div>} />
           </Route>
         </Routes>
       </BrowserRouter>
