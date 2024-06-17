@@ -1,3 +1,5 @@
+import { MONEY } from "@/constant/config";
+
 /**
  * Format string to Label / Display.
  * @sample first_year -> First Year
@@ -20,3 +22,21 @@ export const formatToLabel = (input: string | null | undefined) => {
  * @sample Pag-ibig -> pag_ibig
  */
 export const formatToId = (input: string) => input.replace(/[\s-]+/g, "_").toLowerCase();
+
+export const parseToMoney = (value: number | undefined) => {
+  const _value = value || 0;
+  return Intl.NumberFormat(MONEY.LOCALE, {
+    style: "currency",
+    currency: MONEY.CURRENCY,
+  }).format(_value);
+};
+
+export const shortParseToMoney = (value: number | undefined) => {
+  const _value = value || 0;
+  return Intl.NumberFormat(MONEY.LOCALE, {
+    notation: "compact",
+    compactDisplay: "short",
+  }).format(_value);
+};
+
+export const formatToCount = (value: number | undefined) => new Intl.NumberFormat(undefined).format(value || 0);
