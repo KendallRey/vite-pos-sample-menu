@@ -86,6 +86,7 @@ export const MuiFormSelect = (props: IMuiFormSelect) => {
         disabled={disabled}
         className={selectClassName || ""}
         {...cleanProps}
+        MenuProps={MENU_PROPS}
       >
         {children}
       </MuiSelect>
@@ -93,3 +94,10 @@ export const MuiFormSelect = (props: IMuiFormSelect) => {
     </CustomMuiFormControl>
   );
 };
+
+export const MENU_PROPS = {
+  disableScrollLock: true,
+  style: {
+    maxHeight: 300,
+  },
+} as const;

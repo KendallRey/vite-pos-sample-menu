@@ -1,18 +1,21 @@
 import { TextField, TextFieldProps, alpha, styled } from "@mui/material";
 
-type IMuiTextField = TextFieldProps;
+export type IMuiTextField = {
+  errorText?: string;
+} & TextFieldProps;
 
 const DEFAULT_PROPS: TextFieldProps = {
   size: "small",
   variant: "filled",
 };
 
-const CustomMuiTextField = styled((props: IMuiTextField) => (
+export const CustomMuiTextField = styled((props: IMuiTextField) => (
   <TextField
     {...props}
     {...DEFAULT_PROPS}
     InputProps={{
       disableUnderline: true,
+      ...props.InputProps,
     }}
   />
 ))(({ theme }) => ({
@@ -39,8 +42,8 @@ const CustomMuiTextField = styled((props: IMuiTextField) => (
 }));
 
 const MuiTextField: React.FC<IMuiTextField> = (props) => {
-  const { ...otherProps } = props;
-  return <CustomMuiTextField {...DEFAULT_PROPS} {...otherProps} />;
+  const { errorText, ...otherProps } = props;
+  return <CustomMuiTextField {...DEFAULT_PROPS} error={Boolean(errorText)} helperText={errorText} {...otherProps} />;
 };
 
 export default MuiTextField;

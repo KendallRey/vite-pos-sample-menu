@@ -6,7 +6,7 @@ import Slide from "@mui/material/Slide";
 import { TransitionProps } from "@mui/material/transitions";
 import { ReactElement, ReactNode, Ref, forwardRef, useCallback, useState } from "react";
 import MuiButton from "../button/Button";
-import { useMediaQuery, useTheme } from "@mui/material";
+import { Breakpoint, useMediaQuery, useTheme } from "@mui/material";
 
 const Transition = forwardRef(function Transition(
   props: TransitionProps & {
@@ -25,8 +25,11 @@ type IMuiDialog = {
   onClose?: () => void;
   closeText?: string;
   confirmText?: string;
-  variant?: "form" | "default";
+  variant?: "form" | "default" | "confirm" | "delete";
+  maxWidth?: false | Breakpoint | undefined;
   fullscreen?: boolean;
+  fullWidth?: boolean;
+  disableConfirm?: boolean;
 } & DialogProps;
 
 const MuiDialog: React.FC<IMuiDialog> = (props) => {
@@ -39,6 +42,9 @@ const MuiDialog: React.FC<IMuiDialog> = (props) => {
     closeText,
     confirmText,
     variant = "default",
+    maxWidth,
+    fullWidth,
+    disableConfirm,
     ...otherProps
   } = props;
 
@@ -51,8 +57,8 @@ const MuiDialog: React.FC<IMuiDialog> = (props) => {
       TransitionComponent={Transition}
       onClose={onClose}
       fullScreen={variant === "form" ? fullscreen : false}
-      maxWidth="xs"
-      fullWidth
+      maxWidth={variant === "confirm" ? "xs" : maxWidth}
+      fullWidth={fullWidth}
       {...otherProps}
     >
       <DialogTitle>{title}</DialogTitle>
@@ -61,7 +67,12 @@ const MuiDialog: React.FC<IMuiDialog> = (props) => {
       </DialogContent>
       <DialogActions>
         <MuiButton onClick={onClose}>{closeText ?? "Close"}</MuiButton>
-        <MuiButton variant="contained" onClick={onConfirm}>
+        <MuiButton
+          variant="contained"
+          onClick={onConfirm}
+          color={variant === "delete" ? "error" : "primary"}
+          disabled={disableConfirm}
+        >
           {confirmText ?? "Confirm"}
         </MuiButton>
       </DialogActions>
